@@ -1,0 +1,281 @@
+
+$lime_2: #f4ffb8;
+$lime_4: #d3f261;
+$purple_10: #120338;
+$gray:#f0f2f5;
+$gray_6:#bfbfbf;
+$gray_4:#f0f0f0;
+$blue_3: #adc6ff;
+$blue_4: #69c0ff;
+$bckgcolor: #dceeff;
+$current_bckgcolor: #d1fdff;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*:focus {outline:none !important}
+
+.App {
+  min-height: 100vh;
+  background-color: $gray;
+}
+
+header {
+  width: 100%;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  text-align: end;
+  background-color: $purple_10;
+  a {
+    margin-left: 10px;
+    color: red;
+    &:hover {
+      color: $lime_4;
+    }
+  }
+}
+
+.container {
+  max-width: 768px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.form {
+  margin: 0 auto;
+  padding: 10px;
+  max-width: 250px;
+  input {
+    width: 100%;
+    margin-bottom: 32px;
+    padding: 10px;  
+    border: 2px solid $gray_6;
+    background-color: $gray_4;
+    border-radius: 8px;
+    &:focus{
+      border-color: $blue_3;
+    }
+    &:hover {
+      box-shadow: 0 0 10px $blue_3;
+    }
+  }
+
+  .btn {
+    padding: 10px;
+    border: 2px solid $gray_6;
+    border-radius: 8px;
+    background-color: $gray;
+    cursor: pointer;
+    transition-duration: .3s;
+    &:hover {
+      transition-duration: .3s;
+      border-color: $blue_4;
+      color: $blue_4;
+    }
+    &[disabled] {
+      color: red;
+    }
+  }
+}
+
+.error {
+  color: red;
+  border-color: red !important;
+}
+
+.field {
+  position: relative;
+}
+
+p.error {
+  position: absolute;
+  top: 65px;
+}
+
+.profile-header {
+  margin-top: 20px;
+  display: flex;
+  .photo {
+    width: 240px;
+    height: 320px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+
+    img {
+      object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+  }
+}
+
+.chat_page {
+  margin-top: 20px;
+  display: flex;
+  height: 100%;
+
+  .users_list {
+    margin-right: 20px;
+  }
+
+  .chat_body {
+    width: 100%;
+
+    .messages {
+      position: absolute;
+      top: 125px;
+      bottom: 50px;
+      width: 50%;
+      overflow: auto;
+    }
+
+    .chat_input {
+      position: absolute;
+      bottom: 20px;
+      width: 50%;
+    }
+
+    form {
+      display: flex;
+    }
+
+    input {
+      width: 100%;
+      padding-right: 27px;
+    }
+
+    button {
+      right: 0;
+      background: none;
+      border: none;
+      padding: 0 5px;
+      color: #e9ecfe;
+      top: 0;
+      bottom: 0;
+      cursor: pointer;
+
+      &:hover {
+        color: #c0c9fc;
+      }
+    }
+  }
+}
+
+.message-and-avatar, .dialog_item {
+  display: flex;
+  margin: 2px 0;
+  border-radius: 5px;
+
+  .message {
+    flex: 1;
+
+    .msg_body {
+      overflow-wrap: anywhere;
+    }
+
+    .user {
+      font-weight: bolder;
+      color: #0058b0;
+    }
+
+    .datetime {
+      margin-left: 10px;
+      color: $gray_6;
+    }
+  }
+}
+
+.avatar {
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 6.6px 5px;
+  border-radius: 50%;
+
+  img {
+    object-fit: cover;
+      width: 100%;
+      height: 100%;
+      
+  }
+}
+
+// .dialog_item .user,
+.dialog_item .msg_body, 
+.dialog_item .msg_header .user {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;  
+  padding-right: 5px;
+  text-overflow: ellipsis;
+}
+
+.dialog_item .msg_header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dialogs_list {
+  margin-right: 20px;
+  width: 250px;
+
+  .message {
+    overflow: auto;
+  }
+}
+
+.dialog_item {
+  cursor: pointer;
+}
+
+.current_dialog {
+  background-color: $bckgcolor;
+}
+
+.partner_info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > a {
+    display: flex;
+     padding: 5px;
+     background-color: $bckgcolor;
+     border-radius: 8px;
+     align-items: center;
+  }
+}
+
+.user_list .user {
+  display: flex;
+  align-items: center;
+  & > a {
+    margin-left: 10px;
+  }
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.profile-header {
+  .success_upload {
+    color: green;
+  }
+  .error_upload {
+    color: red;
+  }
+}
