@@ -17,7 +17,6 @@
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.5",
     "@types/socket.io-client": "^1.4.33",
-    "antd": "^4.6.5",
     "axios": "^0.20.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.16.1",

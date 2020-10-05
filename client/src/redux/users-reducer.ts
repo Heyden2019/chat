@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { usersAPI } from '../api/api';
 import { EmailAndPasswordType } from '../types';
 import { AppThunk } from './store';
+import { setInitialDialogsState } from './dialogs-reducer';
+import { setInitialMessagesState } from './messages-reducer';
 
 const initialState: UsersState = {
   users: [],
@@ -24,11 +26,17 @@ export const usersSlice = createSlice({
 
     setTargetUser: (state, action) => {
       state.targetUser = action.payload
+    },
+
+    setInitialUsersState: (state) => {
+      state.users = []
+      state.targetUser = null
+      state.currentUser = null
     }
   },
 });
 
-export const { setUsers, setCurrentUser, setTargetUser } = usersSlice.actions;
+export const { setUsers, setCurrentUser, setTargetUser, setInitialUsersState } = usersSlice.actions;
 
 export const getUsers = (): AppThunk => async dispatch => {
   const users = await usersAPI.getUsers()
@@ -68,10 +76,12 @@ export const getCurrentUser = (): AppThunk => async dispatch => {
 
 export const logout = (): AppThunk => async dispatch => {
   await usersAPI.logout()
-  dispatch(setCurrentUser(null));
+  dispatch(setInitialUsersState());
+  dispatch(setInitialDialogsState());
+  dispatch(setInitialMessagesState());
 }
 
-export const getUserById = (id: number): AppThunk => async dispatch => {
+export const getUserById = (id: string): AppThunk => async dispatch => {
   const data = await usersAPI.getUserById(id)
   dispatch(setTargetUser(data));
 }

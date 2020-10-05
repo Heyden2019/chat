@@ -11,9 +11,6 @@ import { getCurrentUser } from './redux/users-reducer';
 import NavBar from './components/NavBar';
 import Profile from './components/Profile';
 import Chat from './components/chat/Chat';
-import openSocket from 'socket.io-client'
-
-export const socket = openSocket('http://localhost:5000')
 
 const App = () => {
 

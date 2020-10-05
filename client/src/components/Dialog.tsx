@@ -17,7 +17,7 @@ const Dialog: FC<PropsType> = React.memo(({user, text, date, isMyMsg}) => {
     const params: any = useParams()
     const lastMessageTime = useMemo(() => formatDate(date), [date])
 
-    const changeCurrentDialog = (id: number) => {
+    const changeCurrentDialog = (id: string) => {
         history.push('/chat/' + id)
     }
 

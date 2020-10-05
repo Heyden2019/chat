@@ -14,6 +14,11 @@ export class MessagesController {
     }
 
     createMessage = async (req: myReq, res: express.Response) => {
+        if(req.session.userId == req.params.userid) {
+            return res.status(404).json({
+                message: "Not Found"
+            })
+        }
         const text = req.body.msg
         let dialog = await Dialog.findOne({users: { $all: [req.session.userId, req.params.userid]}})
         if (!dialog) {
@@ -22,11 +27,11 @@ export class MessagesController {
         const message = await Message.create({user: req.session.userId, text, dialog})
         //@ts-ignore
         dialog.lastMessage = message._id
-        dialog.save()
+        await dialog.save()
 
         await message.populate('user').execPopulate()
         await dialog.populate('users').populate('lastMessage').execPopulate()
-
+        
         this.io.to(req.params.userid).emit("SERVER:NEW_MESSAGE_IN_DIALOG_WITH" + req.session.userId, message)
         this.io.to(req.session.userId).emit("SERVER:NEW_MESSAGE_IN_DIALOG_WITH" + req.params.userid, message)
         this.io.to(req.params.userid).emit("SERVER:DIALOG_WAS_UPDATED", dialog)
@@ -35,9 +40,14 @@ export class MessagesController {
     }
 
     getMessagesByPartnerId = async (req: myReq, res: express.Response) => {
+        if(req.session.userId == req.params.userid) {
+            return res.status(200).json({
+                messages: [],
+                partner: null
+            })
+        }
         const dialog = await Dialog.findOne({users: { $all: [req.session.userId, req.params.userid]}})
         const partner = await User.findById(req.params.userid)
-        console.log('partner', partner)
         if (!dialog) {
             if(partner) {
                 return res.status(200).json({

@@ -11,7 +11,9 @@ const dialogSchema = new mongoose.Schema<IDialog>({
     users: [{ 
         type:  mongoose.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
+        unique: true,
+        
     }],
     lastMessage: {
         type: mongoose.Types.ObjectId,

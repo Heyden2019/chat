@@ -19,16 +19,21 @@ export const messagesSlice = createSlice({
 
     addMessage: (state, action) => {
       state.messages.push(action.payload)
+    },
+
+    setInitialMessagesState: (state) => {
+      state.messages = []
+      state.partner = null
     }
 
     },
 });
 
-export const { setMessages, addMessage } = messagesSlice.actions;
+export const { setMessages, addMessage, setInitialMessagesState } = messagesSlice.actions;
 
 export const getMessages = (partnerId: string): AppThunk => async dispatch => {
   const data = await messageAPI.getMessages(partnerId)
-  dispatch(setMessages(data.data));
+  dispatch(setMessages(data));
 }
 
 export const sendMessage = (partnerId: string, msg: string): AppThunk => async () => {

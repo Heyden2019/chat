@@ -65,6 +65,9 @@ export class UsersController {
     }
 
     getMe = (req: myReq, res: express.Response) => {
+        if (!req.session?.userId) {
+            return res.status(200).json(null)
+        }
         User.findById(req.session.userId)
         .then((user: any) => {
             user = user.toObject()

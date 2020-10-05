@@ -21,7 +21,7 @@ const RoutesCreator = (app, io) => {
     
     //users routes
     app.get("/users", UsersCtrl.getAllUsers)
-    app.get("/users/me", isAuthenticated, UsersCtrl.getMe)
+    app.get("/users/me", UsersCtrl.getMe)
     app.get("/users/logout", isAuthenticated, UsersCtrl.logout)
     app.get("/users/:id", UsersCtrl.getUserById)
     app.post("/users/register", registerValidator, requestCleaner, UsersCtrl.register)

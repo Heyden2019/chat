@@ -30,7 +30,7 @@ export interface User {
     lastName: string;
     email: string;
     image_id: string; 
-    _id: number
+    _id: string
 }
 
 export type MessagesState = {

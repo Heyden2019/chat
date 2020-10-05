@@ -18,12 +18,16 @@ export const messagesSlice = createSlice({
     updateDialogs: (state, action) => {
       state.dialogs = state.dialogs.filter(dialog => dialog._id !== action.payload._id)
       state.dialogs = [action.payload, ...state.dialogs]
+    },
+
+    setInitialDialogsState: (state) => {
+      state.dialogs = []
     }
 
     },
 });
 
-export const { setDialogs, updateDialogs } = messagesSlice.actions;
+export const { setDialogs, updateDialogs, setInitialDialogsState } = messagesSlice.actions;
 
 export const getDialogs = (): AppThunk => async dispatch => {
     const data = await dialogAPI.getDialogs()

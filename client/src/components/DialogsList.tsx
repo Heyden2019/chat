@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateDialogs } from '../redux/dialogs-reducer'
 import { RootState } from '../redux/store'
 import Dialog from './Dialog'
-import { socket } from '../App'
 import { Dialog as DialogType, User } from '../types'
 
 type PropsType = {
     dialogs: DialogType[]
+    socket: any
 }
 
-const DialogsList: FC<PropsType> = React.memo(({dialogs}) => {
+const DialogsList: FC<PropsType> = React.memo(({dialogs, socket}) => {
     const dispatch = useDispatch()
     const myId = useSelector((state: RootState) => state.users.currentUser?._id)
 
@@ -23,7 +23,7 @@ const DialogsList: FC<PropsType> = React.memo(({dialogs}) => {
         }
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-    if(!dialogs.length) return <p>Loading... </p>
+    if(!dialogs.length) return <p>No dialogs </p>
 
     return (<>
             {[...dialogs].map(dialog => (

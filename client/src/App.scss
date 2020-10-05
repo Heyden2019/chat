@@ -19,8 +19,14 @@ $current_bckgcolor: #d1fdff;
 *:focus {outline:none !important}
 
 .App {
-  min-height: 100vh;
+  height: 100%;
   background-color: $gray;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  height: 100%;
 }
 
 header {
@@ -43,6 +49,7 @@ header {
   max-width: 768px;
   margin: 0 auto;
   width: 100%;
+  padding: 3px;
 }
 
 .form {
@@ -117,8 +124,9 @@ p.error {
 }
 
 .chat_page {
-  margin-top: 20px;
+  padding-top: 20px;
   display: flex;
+  align-items: flex-start;
   height: 100%;
 
   .users_list {
@@ -126,20 +134,20 @@ p.error {
   }
 
   .chat_body {
-    width: 100%;
+    min-width: 500px;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+
 
     .messages {
-      position: absolute;
-      top: 125px;
-      bottom: 50px;
-      width: 50%;
-      overflow: auto;
+      overflow: overlay;
+      flex: 1 1 auto;
+      height: 1px;
     }
 
     .chat_input {
-      position: absolute;
-      bottom: 20px;
-      width: 50%;
+      padding: 5px 10px;
     }
 
     form {
@@ -156,13 +164,14 @@ p.error {
       background: none;
       border: none;
       padding: 0 5px;
-      color: #e9ecfe;
+      color: red;
       top: 0;
       bottom: 0;
       cursor: pointer;
 
       &:hover {
-        color: #c0c9fc;
+        color: $lime_4;
+        background-color: $gray_6;
       }
     }
   }
@@ -188,6 +197,7 @@ p.error {
     .datetime {
       margin-left: 10px;
       color: $gray_6;
+      white-space: nowrap;
     }
   }
 }
@@ -228,7 +238,11 @@ p.error {
 
 .dialogs_list {
   margin-right: 20px;
-  width: 250px;
+  min-width: 250px;
+  padding-right: 3px;
+  overflow: overlay;
+  height: 100%;
+  flex: 0 0;
 
   .message {
     overflow: auto;
@@ -277,5 +291,36 @@ nav {
   }
   .error_upload {
     color: red;
+  }
+}
+
+.navbar_avatar {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  margin-left: 0;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+  background-color:  #f3faf7;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #143861;
+}
+
+.content {
+  height: 100%;
+  overflow: auto;
+  .container {
+    height: 100%;
+    .chat_page {
+      height: 100%;
+      .chat_body {
+        height: 100%;
+      }
+    }
   }
 }

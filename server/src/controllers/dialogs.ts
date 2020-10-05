@@ -10,7 +10,6 @@ export class DialogsController {
             res.status(200).json(dialogs)
         })
         .catch(err => {
-            console.log('err', err)
             res.json({message: "Finding Error"})
         })
     }

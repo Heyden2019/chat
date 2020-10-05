@@ -56,7 +56,7 @@ export const usersAPI = {
         })
     },
 
-    getUserById: async (id: number) => {
+    getUserById: async (id: string) => {
         return await instance.get(`users/${id}`)
         .then((res) => {
             return res.data
@@ -64,11 +64,7 @@ export const usersAPI = {
         .catch(err => {
             return null
         })
-    },
-
-    // setNewPhoto: async (photo: any) => {
-    //     return await instance.post('images', photo)
-    // }
+    }
 }
 
 export const dialogAPI = {
@@ -80,8 +76,9 @@ export const dialogAPI = {
 
 export const messageAPI = {
     getMessages: async (id: string) => {
-        const messages = await instance.get("messages/" + id)
-        return messages
+        return await instance.get("messages/" + id)
+        .then( msgs => msgs.data)
+        .catch(e => console.log(e))
     },
 
     sendMessage: async (id: string, msg: string) => {
