@@ -67,7 +67,7 @@ const Profile: FC<PropsType> = () => {
     return (
         <div className="profile-header">
             <div className="photo">
-                <img src={targetUser?.image_id ? `http://localhost:5000/images/${targetUser.image_id}` : defaultPhoto} alt="userPhoto" />
+                <img src={targetUser?.image_id ? `http://localhost:3000/api/images/${targetUser.image_id}` : defaultPhoto} alt="userPhoto" />
             </div>
             <div className="info">
                 <p>{isMe ? <b>You: </b> : null}  {targetUser?.firstName} {targetUser?.lastName}</p>
@@ -88,7 +88,6 @@ const Profile: FC<PropsType> = () => {
                     }
                 </>
                     : null}
-
             </div>
         </div>
     )

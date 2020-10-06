@@ -1,9 +1,12 @@
 import axios from "axios"
+import os from "os";
 import { EmailAndPasswordType, RegisterFieldsType, ResponseType } from "./../types"
 
+const port = process.env.PORT || 3000;
+let baseURL: string = 'http://' + os.hostname() + ':' + port + '/api/';
 
 export const instance = axios.create({
-    baseURL: "http://localhost:5000/",
+    baseURL: baseURL,
     headers: {
         'Content-Type': 'application/json'
     },

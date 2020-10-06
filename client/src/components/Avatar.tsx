@@ -8,7 +8,7 @@ type PropsType = {
 const Avatar: FC<PropsType> = ({image_id}) => {
     return (
         <div className="avatar">
-            <img src={image_id ? `http://localhost:5000/images/${image_id}` : defaultPhoto} alt='avatar'/>
+            <img src={image_id ? `http://localhost:3000/api/images/${image_id}` : defaultPhoto} alt='avatar'/>
         </div>
     )
 }

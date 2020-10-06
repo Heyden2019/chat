@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useHistory } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { RootState } from '../redux/store'
 import { logout } from '../redux/users-reducer'
 import Avatar from './Avatar'

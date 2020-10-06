@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.scss';
-import "antd/dist/antd.css";
 import {Route, Switch} from "react-router-dom";
 import Users from './components/Users'
 import Login from './components/Login';

@@ -42,7 +42,7 @@ const Messages: FC<PropsType> = React.memo(({socket, partnerId}) => {
                     key={msg._id} 
                     />
         ))}
-    </div>
+        </div>
     )
 })
 

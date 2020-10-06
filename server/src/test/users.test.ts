@@ -36,11 +36,11 @@ describe('Users', () => {
 
     let userId: any
 
-    describe('POST /users/register', () => {
+    describe('POST /api/users/register', () => {
 
         it("it should create the user", (done) => {
             agent
-                .post('/users/register')
+                .post('/api/users/register')
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(201)
@@ -54,7 +54,7 @@ describe('Users', () => {
         })
         it("it should return status(400) (Email already exist)", (done) => {
             agent
-            .post('/users/register')
+            .post('/api/users/register')
             .send(user)
             .end((err, res) => {
                 res.should.have.status(400)
@@ -64,10 +64,10 @@ describe('Users', () => {
         })
     })
 
-    describe('GET /users', () => {
+    describe('GET /api/users', () => {
         it("it should get 1 user", (done) => {
             agent
-                .get('/users')
+                .get('/api/users')
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.length.should.be.eql(1)
@@ -78,10 +78,10 @@ describe('Users', () => {
         })
     })
 
-    describe('GET /users/me GET /users/logout POST /users/login', () => {
+    describe('GET /api/users/me GET /api/users/logout POST /api/users/login', () => {
         it("it should return 'me'", done => {
             agent
-                .get('/users/me')
+                .get('/api/users/me')
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.should.not.have.property('password')
@@ -91,7 +91,7 @@ describe('Users', () => {
         })
         it("it should delete cookies", done => {
             agent
-                .get('/users/logout')
+                .get('/api/users/logout')
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.message.should.be.eql('Logout success')
@@ -100,15 +100,15 @@ describe('Users', () => {
         })
         it("it should not return 'me'", done => {
             agent
-                .get('/users/me')
+                .get('/api/users/me')
                 .end((err, res) => {
-                    res.should.have.status(401)
+                    res.should.have.status(200)
                     done()
                 })
         })
         it("it should not login user (wrong password)", done => {
             agent
-                .post('/users/login')
+                .post('/api/users/login')
                 .send({
                     email: user.email,
                     password: "wqdqwdds"
@@ -120,7 +120,7 @@ describe('Users', () => {
         })
         it("it should login user", done => {
             agent
-                .post('/users/login')
+                .post('/api/users/login')
                 .send({
                     email: user.email,
                     password: user.password
@@ -133,7 +133,7 @@ describe('Users', () => {
         })
         it("it should return 'me'", done => {
             agent
-                .get('/users/me')
+                .get('/api/users/me')
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.should.not.have.property('password')
@@ -143,10 +143,10 @@ describe('Users', () => {
         })
     })
 
-    describe('GET /users/:id', () => {
+    describe('GET /api/users/:id', () => {
         it("it should return user by id", done => {
             agent
-                .get('/users/' + userId )
+                .get('/api/users/' + userId )
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.should.not.have.property('password')
@@ -156,7 +156,7 @@ describe('Users', () => {
         })
         it("it should return error 404", done => {
             agent
-                .get('/users/12345678901234567890abcabc' )
+                .get('/api/users/12345678901234567890abcabc' )
                 .end((err, res) => {
                     res.should.have.status(404)
                     res.body.message.should.be.eql('404 not found')
@@ -165,7 +165,7 @@ describe('Users', () => {
         })
         it("it should return error 404 (#2)", done => {
             agent
-                .get('/users/a' + userId )
+                .get('/api/users/a' + userId )
                 .end((err, res) => {
                     res.should.have.status(404)
                     res.body.message.should.be.eql('404 not found')
@@ -174,10 +174,10 @@ describe('Users', () => {
         })
     })
 
-    describe('PUT /users', () => {
+    describe('PUT /api/users', () => {
         it("it should change password and firstName", done => {
             agent
-                .put('/users')
+                .put('/api/users')
                 .send({
                     password: newPassword,
                     firstName: newFirstName
@@ -190,7 +190,7 @@ describe('Users', () => {
         })
         it("it should return new 'me'", done => {
             agent
-                .get('/users/me')
+                .get('/api/users/me')
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.should.not.have.property('password')
@@ -201,7 +201,7 @@ describe('Users', () => {
         })
         it("it should not change password and firstName", done => {
             agent
-                .put('/users')
+                .put('/api/users')
                 .send({
                     password: "12345",
                     firstName: newFirstName
@@ -213,10 +213,10 @@ describe('Users', () => {
         })
     })
 
-    describe('DELETE /users', () => {
+    describe('DELETE /api/users', () => {
         it("it should delete user", done => {
             agent
-                .delete('/users')
+                .delete('/api/users')
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.message.should.be.eql('You were deleted successful')
@@ -225,7 +225,7 @@ describe('Users', () => {
         })
         it("it should get no users", (done) => {
             agent
-                .get('/users')
+                .get('/api/users')
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.length.should.be.eql(0)

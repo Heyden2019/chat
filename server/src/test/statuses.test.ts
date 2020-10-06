@@ -41,10 +41,10 @@ describe('Statuses', () => {
     }
     let statusId: any
 
-    describe('POST /statuses', () => {
+    describe('POST /api/statuses', () => {
 
         it("it should return error (no permissions)", (done) => {
-            agent.post('/statuses')
+            agent.post('/api/statuses')
                 .send(status)
                 .end((err, res) => {
                     res.should.have.status(401)
@@ -54,7 +54,7 @@ describe('Statuses', () => {
 
         it("it should create the user", (done) => {
             agent
-                .post('/users/register')
+                .post('/api/users/register')
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(201)
@@ -67,7 +67,7 @@ describe('Statuses', () => {
         })
 
         it("it should create the status", (done) => {
-            agent.post('/statuses')
+            agent.post('/api/statuses')
                 .send(status)
                 .end((err, res) => {
                     res.should.have.status(201)
@@ -79,7 +79,7 @@ describe('Statuses', () => {
         })
 
         it("it should return status(400) (newTitle is empty)", (done) => {
-            agent.post('/statuses')
+            agent.post('/api/statuses')
             .send({title: "", desc: status.desc})
             .end((err, res) => {
                 res.should.have.status(400)
@@ -89,9 +89,9 @@ describe('Statuses', () => {
         })
     })
 
-    describe('GET /statuses/:id', () => {
+    describe('GET /api/statuses/:id', () => {
         it("it should return status by id", (done) => {
-            agent.get('/statuses/' + statusId)
+            agent.get('/api/statuses/' + statusId)
             .end((err, res) => {
                 res.should.have.status(200)
                 res.body.title.should.be.eql(status.title)
@@ -100,7 +100,7 @@ describe('Statuses', () => {
             })
         })
         it("it should return status 404", (done) => {
-            agent.get('/statuses/12345678901234567890abck')
+            agent.get('/api/statuses/12345678901234567890abck')
             .end((err, res) => {
                 res.should.have.status(404)
                 done()
@@ -108,9 +108,9 @@ describe('Statuses', () => {
         })
     })
 
-    describe('GET /statuses', () => {
+    describe('GET /api/statuses', () => {
         it("it should return statuses", (done) => {
-            agent.get('/statuses')
+            agent.get('/api/statuses')
             .end((err, res) => {
                 res.should.have.status(200)
                 res.body.length.should.be.eql(1)
@@ -121,9 +121,9 @@ describe('Statuses', () => {
         })
     })
 
-    describe('PUT /statuses/:id', () => {
+    describe('PUT /api/statuses/:id', () => {
         it("it should return status and update it by id", (done) => {
-            agent.put('/statuses/' + statusId)
+            agent.put('/api/statuses/' + statusId)
             .send({title: newTitle, desc: newDesc})
             .end((err, res) => {
                 res.should.have.status(200)
@@ -131,7 +131,7 @@ describe('Statuses', () => {
             })
         })
         it("it should return status by id", (done) => {
-            agent.get('/statuses/' + statusId)
+            agent.get('/api/statuses/' + statusId)
             .end((err, res) => {
                 res.should.have.status(200)
                 res.body.title.should.be.eql(newTitle)
@@ -140,7 +140,7 @@ describe('Statuses', () => {
             })
         })
         it("it should return status 404", (done) => {
-            agent.put('/statuses/12345678901234567890abck')
+            agent.put('/api/statuses/12345678901234567890abck')
             .send({title: newTitle, desc: newDesc})
             .end((err, res) => {
                 res.should.have.status(404)
@@ -148,7 +148,7 @@ describe('Statuses', () => {
             })
         })
         it("it should return status 400 (Title invalid)", (done) => {
-            agent.put('/statuses/' + statusId)
+            agent.put('/api/statuses/' + statusId)
             .send({title: "", desc: newDesc})
             .end((err, res) => {
                 res.should.have.status(400)
@@ -156,7 +156,7 @@ describe('Statuses', () => {
             })
         })
         it("it should return status with updated title", (done) => {
-            agent.put('/statuses/' + statusId)
+            agent.put('/api/statuses/' + statusId)
             .send({title: newTitle})
             .end((err, res) => {
                 res.should.have.status(200)
@@ -166,9 +166,9 @@ describe('Statuses', () => {
         })
     })
 
-    describe('DELETE /statuses/:id', () => {
+    describe('DELETE /api/statuses/:id', () => {
         it("it should return status and update it by id", (done) => {
-            agent.delete('/statuses/' + statusId)
+            agent.delete('/api/statuses/' + statusId)
             .end((err, res) => {
                 res.should.have.status(200)
                 res.body.message.should.be.eql("Deleted successful")
@@ -176,14 +176,14 @@ describe('Statuses', () => {
             })
         })
         it("it should return status by id", (done) => {
-            agent.get('/statuses/' + statusId)
+            agent.get('/api/statuses/' + statusId)
             .end((err, res) => {
                 res.should.have.status(404)
                 done()
             })
         })
         it("it should return status 404", (done) => {
-            agent.delete('/statuses/12345678901234567890abck')
+            agent.delete('/api/statuses/12345678901234567890abck')
             .send({title: newTitle, desc: newDesc})
             .end((err, res) => {
                 res.should.have.status(404)
