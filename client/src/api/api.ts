@@ -20,13 +20,15 @@ export const usersAPI = {
     },
 
     login: async (emailAndPassword: EmailAndPasswordType): Promise<ResponseType> => {
-        return instance.post("users/login", emailAndPassword)
+        return await instance.post("users/login", emailAndPassword)
         .then((res) => {
             return res.data
         })
         .catch(err => {
             if (err.response.status === 400) return err.response.data
-            return Promise.reject()
+            throw new Error(err.message);
+            
+            // return Promise.reject()
         })
     },
 
@@ -78,8 +80,8 @@ export const dialogAPI = {
 }
 
 export const messageAPI = {
-    getMessages: async (id: string) => {
-        return await instance.get("messages/" + id)
+    getMessages: async (id: string, createdAt: Date | string = "") => {
+        return await instance.get("messages/" + id, {params: {createdat: createdAt}})
         .then( msgs => msgs.data)
         .catch(e => console.log(e))
     },

@@ -41,7 +41,6 @@ export const { setUsers, setCurrentUser, setTargetUser, setInitialUsersState } =
 export const getUsers = (): AppThunk => async dispatch => {
   const users = await usersAPI.getUsers()
   dispatch(setUsers(users.data));
-  return [{msg: "dwq", param: 'wf'}]
 };
 
 export const login = (emailAndPassword: EmailAndPasswordType): AppThunk => dispatch => {

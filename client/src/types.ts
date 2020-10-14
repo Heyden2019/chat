@@ -35,7 +35,8 @@ export interface User {
 
 export type MessagesState = {
     messages: Message[]
-    partner: User | null
+    partner: User | null,
+    hasMore: boolean
 }
 
 export type Message = {

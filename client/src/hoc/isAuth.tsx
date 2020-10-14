@@ -12,8 +12,7 @@ const isAuth = (Component: any) => {
         const history = useHistory()
         const dispatch = useDispatch()
         const me = useSelector((state: RootState) => state.users.currentUser)
-
-        //@ts-ignore
+ 
         useEffect(() => {
             const fn = async () => {
                 let me = await dispatch(getCurrentUser())

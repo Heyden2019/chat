@@ -60,7 +60,10 @@ export class MessagesController {
                 })
             }
         }
-        const messages = await (await Message.find({dialog}).populate('user').sort({'createdAt': -1}).limit(30)).reverse()
-        res.status(200).json({messages, partner})
+        const createdAt = {$lt: req.query.createdat}
+        const portion = parseInt(process.env.MESSAGES_PORTION as string)
+        const messages = await (await Message.find({$and: [{dialog}, req.query.createdat ? {createdAt} : {}]}).populate('user').sort({'createdAt': -1}).limit(portion)).reverse()
+        const hasMore = messages.length === portion
+        res.status(200).json({messages, partner, hasMore})
     }
 }
