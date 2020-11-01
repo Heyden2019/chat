@@ -3,6 +3,7 @@ import User from "./../models/User"
 import { myReq } from "./../types"
 import argon2 from 'argon2'
 import express from 'express'
+import getUsersUrlParser from "./../util/getUsersUrlParser"
 
 export class UsersController {
     io
@@ -11,13 +12,17 @@ export class UsersController {
         this.io = io
     }
 
-    getAllUsers = (req: myReq, res: express.Response) => {
-        User.find().select("-password")
-        .then(users => {
-            res.status(200).json(users)
+    getUsers = (req: myReq, res: express.Response) => {
+        const {searchText, page, newFirst} = getUsersUrlParser(req.query)
+        const portion = +(process.env.USERS_PORTION as string)
+        const conditions = searchText ? {fullname: {$regex: `${searchText}`, $options: 'i'}} : {}
+        User.find(conditions).select("-password").sort({createdAt: newFirst ? -1 : 1}).skip((page - 1) * portion).limit(portion)
+        .then(async (users) => {
+            const totalUsers = await User.find(conditions).select("-password").countDocuments()
+            res.status(200).json({users, totalUsers})
         })
         .catch(err => {
-            res.status(500).json({message: "Server error"})
+            res.status(500).json({message: err.message})
         })
     }
 
@@ -53,7 +58,10 @@ export class UsersController {
             req.body.password = await argon2.hash(req.body.password)
         } 
     
-        User.findOneAndUpdate({_id: req.session.userId}, req.body).select('-password')
+        User.findOneAndUpdate({_id: req.session.userId}, {
+            ...req.body, 
+            fullname: req.body.firstName + ' ' + req.body.lastName
+        }).select('-password')
         .then((user: any) => {
             user
             ? res.status(200).json(user)
@@ -88,6 +96,7 @@ export class UsersController {
         const hashedPassword = await argon2.hash(req.body.password)
         const user = await new User({
             ...req.body,
+            fullname: req.body.firstName + ' ' + req.body.lastName,
             password: hashedPassword,
         })
     

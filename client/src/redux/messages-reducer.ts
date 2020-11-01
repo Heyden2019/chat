@@ -6,7 +6,8 @@ import { AppThunk } from './store';
 const initialState: MessagesState = {
   messages: [],
   partner: null,
-  hasMore: false
+  hasMore: false,
+  isLoading: true
 };
 
 export const messagesSlice = createSlice({
@@ -29,24 +30,30 @@ export const messagesSlice = createSlice({
       state.messages.push(action.payload)
     },
 
-    setInitialMessagesState: (state) => {
-      state.messages = []
-      state.partner = null
-    }
-
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload
     },
+
+    resetMessagesState: () => {
+      return initialState
+    },
+  },
 });
 
-export const { setMessages, addMessage, setInitialMessagesState, setMoreMessages } = messagesSlice.actions;
+export const { setMessages, addMessage, resetMessagesState, setMoreMessages, setIsLoading } = messagesSlice.actions;
 
 export const getMessages = (partnerId: string): AppThunk => async dispatch => {
+  dispatch(setIsLoading(true))
   const data = await messageAPI.getMessages(partnerId)
   dispatch(setMessages(data));
+  dispatch(setIsLoading(false))
 }
 
 export const getMoreMessages = (partnerId: string, createdAt: Date): AppThunk => async dispatch => {
+  dispatch(setIsLoading(true))
   const data = await messageAPI.getMessages(partnerId, createdAt)
   dispatch(setMoreMessages(data));
+  dispatch(setIsLoading(false))
 }
 
 export const sendMessage = (partnerId: string, msg: string): AppThunk => async () => {

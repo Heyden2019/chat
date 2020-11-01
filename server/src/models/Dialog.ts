@@ -8,17 +8,18 @@ export interface IDialog {
 }
 
 const dialogSchema = new mongoose.Schema<IDialog>({
-    users: [{ 
-        type:  mongoose.Types.ObjectId,
-        ref: 'User',
+    users: {
+        type: [{ 
+            type:  mongoose.Types.ObjectId,
+            ref: 'User',
+        }],
         required: true,
-        unique: true,
-        
-    }],
+        unique: true
+    },
     lastMessage: {
         type: mongoose.Types.ObjectId,
         ref: 'Message',
-        default: null
+        default: null,
     }
 }, {
     timestamps: true

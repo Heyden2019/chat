@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react'
-import formatDate from './../utils/messageTimeFormater'
-import { User } from './../types'
-import Avatar from './Avatar'
+import formatDate from './../../utils/messageTimeFormater'
+import { User } from './../../types'
+import Avatar from './../Avatar'
 
 type PropsType = {
     user: User, 
@@ -19,7 +19,7 @@ const Message: FC<PropsType> = React.memo(({user, createdAt, text}) => {
             <div className="message">
                 <div className="msg_header">
                     <span className="user">
-                        {user.firstName} {user.lastName}
+                        {user.fullname}
                     </span>
                     <span className="datetime">
                         {date}

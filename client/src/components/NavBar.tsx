@@ -25,7 +25,7 @@ const NavBar = () => {
                 <NavLink to={"/user/" + me._id} 
                         className="navbar_avatar">
                     <Avatar image_id={me.image_id} />
-                    {me.firstName} {me.lastName}
+                    {me.fullname}
                 </NavLink>
                 <NavLink to="/chat">Chat</NavLink>
                 <NavLink to="/users">Users</NavLink>

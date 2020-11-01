@@ -2,7 +2,7 @@ import { useFormik } from 'formik'
 import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
-import { sendMessage } from '../redux/messages-reducer'
+import { sendMessage } from './../../redux/messages-reducer'
 
 const ChatInput: FC = () => {
 

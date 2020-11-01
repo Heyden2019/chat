@@ -9,8 +9,9 @@ export interface IUser {
 }
 
 const userSchema = new mongoose.Schema<IUser>({
-    firstName: {type: String, required: true},
-    lastName: {type: String, required: true},
+    // firstName: {type: String, required: true},
+    // lastName: {type: String, required: true},
+    fullname: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true, select: false},
     image_id: {
@@ -21,6 +22,10 @@ const userSchema = new mongoose.Schema<IUser>({
 }, {
     timestamps: true
 })
+
+// userSchema.virtual("fullname").get(function (this) {
+//     return this.firstName + ' ' + this.lastName
+// })
 
 // userSchema.pre("save", function (next) {
 //     if (this.isModified("password") || this.isNew()) {

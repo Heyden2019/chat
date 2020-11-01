@@ -9,6 +9,7 @@ import defaultPhoto from './../static/images/em_avatar_default-user.png'
 import { NavLink } from 'react-router-dom'
 import {instance} from './../api/api'
 import classNames from 'classnames'
+import { API_URL } from '../settings'
 
 
 type PropsType ={
@@ -67,12 +68,11 @@ const Profile: FC<PropsType> = () => {
     return (
         <div className="profile-header">
             <div className="photo">
-                <img src={targetUser?.image_id ? `http://localhost:3000/api/images/${targetUser.image_id}` : defaultPhoto} alt="userPhoto" />
+                <img src={targetUser?.image_id ? `${API_URL}/images/${targetUser.image_id}` : defaultPhoto} alt="userPhoto" />
             </div>
             <div className="info">
-                <p>{isMe ? <b>You: </b> : null}  {targetUser?.firstName} {targetUser?.lastName}</p>
+                <p>{isMe ? <b>You: </b> : null}  {targetUser?.fullname}</p>
                 <p>*beautifully designed other important information*</p>
-                {isMe ? null : <NavLink to={'/chat/' + targetUser?._id}>Start chat</NavLink>}
                 {isMe ? <>
                     <div className="new_photo_form">Upload photo:<br />
                         <input type="file" name="image" onChange={changePhoto} />
@@ -83,11 +83,11 @@ const Profile: FC<PropsType> = () => {
                             'error_upload': answer.type === 'error'
                         })}>
                             {answer.msg}
-                            </p>
+                        </p>
                         : null
                     }
                 </>
-                    : null}
+                    : <NavLink to={'/chat/' + targetUser?._id}>Start chat</NavLink>}
             </div>
         </div>
     )

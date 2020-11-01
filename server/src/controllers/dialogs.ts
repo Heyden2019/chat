@@ -18,8 +18,5 @@ export class DialogsController {
         const user = await User.findById(userId)
         const partner = await User.findById(partnerId)
         return await Dialog.create({users: [user, partner]})
-        .then(dialog => {
-            return dialog
-        })
     }
 }

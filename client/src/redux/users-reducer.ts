@@ -1,15 +1,17 @@
 import { RegisterFieldsType, UsersState } from './../types';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { usersAPI } from '../api/api';
 import { EmailAndPasswordType } from '../types';
 import { AppThunk } from './store';
-import { setInitialDialogsState } from './dialogs-reducer';
-import { setInitialMessagesState } from './messages-reducer';
+import { resetDialogsState } from './dialogs-reducer';
+import { resetMessagesState } from './messages-reducer';
 
 const initialState: UsersState = {
   users: [],
   currentUser: null,
-  targetUser: null
+  targetUser: null,
+  totalUsers: null,
+  loading: "with_pagination"
 };
 
 export const usersSlice = createSlice({
@@ -17,7 +19,8 @@ export const usersSlice = createSlice({
   initialState,
   reducers: {
     setUsers: (state, action) => {
-      state.users = action.payload;
+      state.users = action.payload.users;
+      state.totalUsers = action.payload.totalUsers;
     },
 
     setCurrentUser: (state, action) => {
@@ -28,19 +31,25 @@ export const usersSlice = createSlice({
       state.targetUser = action.payload
     },
 
-    setInitialUsersState: (state) => {
-      state.users = []
-      state.targetUser = null
-      state.currentUser = null
+    setLoading: (state, action: PayloadAction<"with_pagination" | "without_pagination" | null>) => {
+      state.loading = action.payload
+    },
+
+    resetUsersState: (state) => {
+      return initialState
     }
   },
 });
 
-export const { setUsers, setCurrentUser, setTargetUser, setInitialUsersState } = usersSlice.actions;
+export const { setUsers, setCurrentUser, setTargetUser, resetUsersState, setLoading } = usersSlice.actions;
 
-export const getUsers = (): AppThunk => async dispatch => {
-  const users = await usersAPI.getUsers()
-  dispatch(setUsers(users.data));
+export const getUsers = (props: Record<string, any>): AppThunk => async dispatch => {
+  typeof props.page === "number" 
+  ? dispatch(setLoading("without_pagination")) 
+  : dispatch(setLoading("with_pagination"))
+  const {users, totalUsers} = await usersAPI.getUsers({...props})
+  dispatch(setUsers({users, totalUsers}));
+  dispatch(setLoading(null))
 };
 
 export const login = (emailAndPassword: EmailAndPasswordType): AppThunk => dispatch => {
@@ -75,9 +84,9 @@ export const getCurrentUser = (): AppThunk => async dispatch => {
 
 export const logout = (): AppThunk => async dispatch => {
   await usersAPI.logout()
-  dispatch(setInitialUsersState());
-  dispatch(setInitialDialogsState());
-  dispatch(setInitialMessagesState());
+  dispatch(resetUsersState());
+  dispatch(resetDialogsState());
+  dispatch(resetMessagesState());
 }
 
 export const getUserById = (id: string): AppThunk => async dispatch => {

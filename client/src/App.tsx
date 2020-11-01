@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import {Route, Switch} from "react-router-dom";
-import Users from './components/Users'
+import Users from './components/UsersPage/Users'
 import Login from './components/Login';
 import Register from './components/Register';
 import { useDispatch } from 'react-redux';
@@ -33,7 +33,8 @@ const App = () => {
           <Route path="/register" component={Register}/>
           <Route path="/user/:id" component={Profile}/>
           <Route path={["/chat/:id", "/chat"]} component={Chat}/>
-          <Route path={["/users", "/"]} component={Users}/>
+          <Route exact path={["/users", "/"]} component={Users}/>
+          <Route path={["/"]} component={() => (<h5>404</h5>)}/>
         </Switch>
       </div>
     </div>

@@ -1,28 +1,33 @@
 import React, { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateDialogs } from '../redux/dialogs-reducer'
-import { RootState } from '../redux/store'
+import { getDialogs, resetDialogsState, updateDialogs } from './../../redux/dialogs-reducer'
+import { RootState } from './../../redux/store'
 import Dialog from './Dialog'
-import { Dialog as DialogType, User } from '../types'
+import { User } from './../../types'
+import Preloader from '../Preloader'
 
 type PropsType = {
-    dialogs: DialogType[]
     socket: any
 }
 
-const DialogsList: FC<PropsType> = React.memo(({dialogs, socket}) => {
+const DialogsList: FC<PropsType> = React.memo(({socket}) => {
     const dispatch = useDispatch()
     const myId = useSelector((state: RootState) => state.users.currentUser?._id)
-
+    const isLoading = useSelector((state: RootState) => state.dialogs.isLoading)
+    const dialogs = useSelector((state: RootState) => state.dialogs.dialogs)
+    
     useEffect(() => {
+        dispatch(getDialogs())
         socket.on('SERVER:DIALOG_WAS_UPDATED', (dialog: any) => {
-             dispatch(updateDialogs(dialog)) 
-            })
+            dispatch(updateDialogs(dialog)) 
+        })
         return () => {
             socket.off('SERVER:DIALOG_WAS_UPDATED')
+            dispatch(resetDialogsState())
         }
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+    if(isLoading) return <Preloader />
     if(!dialogs.length) return <p>No dialogs </p>
 
     return (<>

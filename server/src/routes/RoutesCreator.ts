@@ -20,7 +20,7 @@ const RoutesCreator = (app, io) => {
     const MessagesCtrl = new MessagesController(io)
     
     //users routes
-    app.get("/api/users", UsersCtrl.getAllUsers)
+    app.get("/api/users", UsersCtrl.getUsers)
     app.get("/api/users/me", UsersCtrl.getMe)
     app.get("/api/users/logout", isAuthenticated, UsersCtrl.logout)
     app.get("/api/users/:id", UsersCtrl.getUserById)
@@ -48,7 +48,6 @@ const RoutesCreator = (app, io) => {
     app.post('/api/images', isAuthenticated, ImageCtrl.uploadNewPhoto)
     
     //dialogs routes
-    app.post('/api/dialogs/:userid', isAuthenticated, DialogsCtrl.createDialog)
     app.get('/api/dialogs', isAuthenticated, DialogsCtrl.getAllDialogs)
     
     //message routes

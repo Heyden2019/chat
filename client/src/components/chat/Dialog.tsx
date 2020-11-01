@@ -1,9 +1,9 @@
 import React, { FC, useMemo } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { User } from '../types'
-import formatDate from './../utils/messageTimeFormater'
+import { User } from './../../types'
+import formatDate from './../../utils/messageTimeFormater'
 import classNames from 'classnames'
-import Avatar from './Avatar'
+import Avatar from './../Avatar'
 
 type PropsType = {
     user: User, 
@@ -28,7 +28,7 @@ const Dialog: FC<PropsType> = React.memo(({user, text, date, isMyMsg}) => {
             <div className="message">
                 <div className="msg_header">
                     <span className="user">
-                        {user.firstName} {user.lastName}
+                        {user.fullname}
                     </span>
                     <span className="datetime">
                         {lastMessageTime}

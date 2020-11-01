@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AppThunk } from './store';
 
 const initialState: DialogsState = {
-  dialogs: [] 
+  dialogs: [],
+  isLoading: true
 };
 
 export const messagesSlice = createSlice({
@@ -20,18 +21,24 @@ export const messagesSlice = createSlice({
       state.dialogs = [action.payload, ...state.dialogs]
     },
 
-    setInitialDialogsState: (state) => {
-      state.dialogs = []
+    resetDialogsState: () => {
+      return initialState
+    },
+
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
     }
 
     },
 });
 
-export const { setDialogs, updateDialogs, setInitialDialogsState } = messagesSlice.actions;
+export const { setDialogs, updateDialogs, resetDialogsState, setIsLoading } = messagesSlice.actions;
 
 export const getDialogs = (): AppThunk => async dispatch => {
     const data = await dialogAPI.getDialogs()
+    dispatch(setIsLoading(true))
     dispatch(setDialogs(data.data));
+    dispatch(setIsLoading(false))
 }
 
 export default messagesSlice.reducer;

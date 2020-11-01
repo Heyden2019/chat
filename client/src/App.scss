@@ -148,6 +148,10 @@ p.error {
       overflow: overlay;
       flex: 1 1 auto;
       height: 1px;
+      .get-more-btn-and-spinner {
+        display: flex;
+        justify-content: center;
+      }
     }
 
     .chat_input {
@@ -225,7 +229,6 @@ p.error {
   }
 }
 
-// .dialog_item .user,
 .dialog_item .msg_body, 
 .dialog_item .msg_header .user {
   width: 100%;
@@ -275,11 +278,25 @@ p.error {
   }
 }
 
-.user_list .user {
-  display: flex;
-  align-items: center;
-  & > a {
-    margin-left: 10px;
+.user_list {
+  margin-top: 10px;
+  
+  .user {
+    display: flex;
+    align-items: center;
+    & > a {
+      margin-left: 10px;
+    }
+
+    &:hover {
+      background-color: $gray_4;
+    }
+
+    &__link {
+      display: flex;
+      align-items: center;
+      color: black;
+    }
   }
 }
 
@@ -326,5 +343,71 @@ nav {
         height: 100%;
       }
     }
+  }
+}
+
+.user-searcher{
+  width: 480px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  .search-input {
+    flex: 1 1;
+    width: 100%;
+    min-height: 40px;
+    min-width: 40px;
+    padding: 0 12px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    background-color: #ededed;
+    color: #464646;
+    margin-right: 20px;
+
+    &:focus {
+      background-color: #f5f6f7;
+      outline: none;
+      border-color: #999;
+    }
+  }
+
+  .search-icon {
+    padding-right: 50px;
+    background-repeat: no-repeat;
+    background-position: right 6px top 45%;
+    background-size: 24px 24px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23929CA5' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M17 11a6 6 0 11-12 0 6 6 0 0112 0zm-1.42 6.56a8 8 0 111.47-1.33l.07.06 3.3 3.3A1 1 0 0119 21l-3.3-3.3-.12-.14z'/%3E%3C/svg%3E");
+  }
+}
+
+.pagination {
+  display: flex;
+
+  &__item {
+    min-width: 24px;
+    text-align: center;
+  }
+
+  &__number {
+    padding: 3px;
+    cursor: pointer;
+    margin: 0 3px;
+    background-color: #ededed;
+    border: 1px solid #bfbfbf;
+  }
+
+  &__active {
+    color: green;
+    border-color: green;
+  }
+}
+
+.spinner {
+  display: flex;
+  margin-top: 10px;
+
+  img {
+    height: 20px;
   }
 }

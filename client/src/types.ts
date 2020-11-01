@@ -23,11 +23,12 @@ export interface UsersState {
     users: Array<User>,
     currentUser: null | User
     targetUser: null | User
+    totalUsers: null | number
+    loading: "with_pagination" | "without_pagination" | null
 }
 
 export interface User {
-    firstName: string;
-    lastName: string;
+    fullname: string;
     email: string;
     image_id: string; 
     _id: string
@@ -35,8 +36,9 @@ export interface User {
 
 export type MessagesState = {
     messages: Message[]
-    partner: User | null,
+    partner: User | null
     hasMore: boolean
+    isLoading: boolean
 }
 
 export type Message = {
@@ -48,6 +50,7 @@ export type Message = {
 
 export type DialogsState = {
     dialogs: Dialog[]
+    isLoading: boolean
 }
 
 export type Dialog = {

@@ -1,12 +1,9 @@
 import axios from "axios"
-import os from "os";
+import { API_URL } from "../settings";
 import { EmailAndPasswordType, RegisterFieldsType, ResponseType } from "./../types"
 
-const port = process.env.PORT || 3000;
-let baseURL: string = 'http://' + os.hostname() + ':' + port + '/api/';
-
 export const instance = axios.create({
-    baseURL: baseURL,
+    baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json'
     },
@@ -14,9 +11,13 @@ export const instance = axios.create({
 })
 
 export const usersAPI = {
-    getUsers: async () => {
-        const users = await instance.get("users")
-        return users
+    getUsers: async ({fullname = '', page = 1, newFirst = true}) => {
+        const {data} = await instance.get("users", {params: {
+            fullname: fullname,
+            page: page,
+            newFirst: newFirst
+        }})
+        return data
     },
 
     login: async (emailAndPassword: EmailAndPasswordType): Promise<ResponseType> => {
