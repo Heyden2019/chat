@@ -1,8 +1,19 @@
 import mongoose from 'mongoose'
 
-const MONGODB_URL = process.env.NODE_ENV == "test"
-    ? process.env.TEST_DB_URL as string
-    : process.env.MONGO_DB_URL as string
+let MONGODB_URL: string 
+switch (process.env.NODE_ENV) {
+    case "test": {
+        MONGODB_URL = process.env.TEST_DB_URL as string
+        break
+    }
+    case "production": {
+        MONGODB_URL = process.env.MONGO_DB_PROD as string
+        break
+    }
+    default: MONGODB_URL = process.env.MONGO_DB_URL as string
+
+}
+
 
 mongoose.connect(
     MONGODB_URL,
