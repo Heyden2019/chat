@@ -6,7 +6,8 @@
   "scripts": {
     "watch": "tsc -w",
     "dev": "nodemon dist/index.js",
-    "start": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "start2": "ts-node src/index.ts",
     "dev2": "nodemon --exec ts-node src/index.ts",
     "test": "SET NODE_ENV='test' && ts-mocha src/test/*.ts --recursive --timeout 10000 --exit",
     "build": "tsc"
