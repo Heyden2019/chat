@@ -9,6 +9,7 @@ import chatSocket from "./sockets/chat"
 import RoutesCreator from "./routes/RoutesCreator"
 import { sessionMiddleware } from "./util/sessionMiddleware"
 import './util/mongoConnect'
+import path from "path"
 
 const app = express()
 const server = new http.Server(app)
@@ -28,6 +29,12 @@ io.use((socket, next) => {
 
 chatSocket(io)
 RoutesCreator(app, io)
+
+app.use(express.static(path.join(__dirname, '../../client/build')));
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+  });
 
 server.listen(process.env.PORT as string, () => {
     console.log("server started on port: " + process.env.PORT as string)
