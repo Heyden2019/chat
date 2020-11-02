@@ -5,15 +5,15 @@ import Messages from './Messages'
 import DialogsList from './DialogsList'
 import MessagesHeader from './MessagesHeader'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDialogs } from '../../redux/dialogs-reducer'
 import { RootState } from '../../redux/store'
 import { useParams } from 'react-router-dom'
 import { getUserById, setTargetUser } from '../../redux/users-reducer'
 import openSocket from 'socket.io-client'
+import { BASE_URL } from '../../settings'
 
 const Chat = React.memo(() => {
 
-    const socket = openSocket('http://localhost:5000')
+    const socket = openSocket(BASE_URL)
     const dispatch = useDispatch()
     const params: any = useParams()
     const partner = useSelector((state: RootState) => state.users.targetUser)

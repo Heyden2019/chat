@@ -15,7 +15,7 @@ const app = express()
 const server = new http.Server(app)
 const io = socket(server, {serveClient: true})
 
-app.use(cors({
+process.env.NODE_ENV !== "production" && app.use(cors({
     credentials: true,
     origin: 'http://localhost:3000'
 }))
