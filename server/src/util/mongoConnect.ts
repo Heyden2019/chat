@@ -1,6 +1,9 @@
 import mongoose from 'mongoose'
 
 let MONGODB_URL: string 
+console.log("*****************************************************")
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+console.log("*****************************************************")
 switch (process.env.NODE_ENV) {
     case "test": {
         MONGODB_URL = process.env.TEST_DB_URL as string
