@@ -1,0 +1,21 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "heroku-prebuild": "cd server && npm install",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "start": "cd server && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heyden2019/chat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Heyden2019/chat/issues"
+  },
+  "homepage": "https://github.com/Heyden2019/chat#readme"
+}
