@@ -7,7 +7,7 @@ import { upload, UPLOAD_PATH } from "./../util/multerUpload";
 import fs from 'fs'
 
 export class ImageController {
-    uploadNewPhoto = async (req: myReq, res: express.Response) => {
+    uploadNewPhoto = async (req:  myReq & {file: any}, res: express.Response) => {
         upload(req, res, (err: any): any => {
             if (err) {
                 if (err.code === 'LIMIT_FILE_SIZE') {

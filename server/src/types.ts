@@ -1,5 +1,6 @@
 import {Request} from "express";
 
+//@ts-ignore
 export type myReq = Request & {session: Express.Session};
 
 export type userValidatorPropsType = {
