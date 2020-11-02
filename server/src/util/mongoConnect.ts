@@ -22,6 +22,7 @@ switch (process.env.NODE_ENV) {
 
 }
 
+console.log('MONGODB_URL', MONGODB_URL)
 
 mongoose.connect(
     MONGODB_URL,
