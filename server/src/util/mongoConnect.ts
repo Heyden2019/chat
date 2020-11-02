@@ -7,13 +7,18 @@ console.log("*****************************************************")
 switch (process.env.NODE_ENV) {
     case "test": {
         MONGODB_URL = process.env.TEST_DB_URL as string
-        break
+        console.log('1', 1)
+        break;
     }
     case "production": {
         MONGODB_URL = process.env.MONGO_DB_PROD as string
-        break
+        console.log('2', 2)
+        break;
     }
-    default: MONGODB_URL = process.env.MONGO_DB_URL as string
+    default: {
+        MONGODB_URL = process.env.MONGO_DB_URL as string
+        console.log('3', 3)
+    }
 
 }
 
