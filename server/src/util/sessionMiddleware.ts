@@ -4,7 +4,7 @@ import mongoose from "mongoose"
 
 const MONGODB_URL = process.env.NODE_ENV == "test"
     ? process.env.TEST_DB_URL as string
-    : process.env.MONGO_DB_URL as string
+    : process.env.MONGO_DB_PROD || process.env.MONGO_DB_URL as string
 
 const MongoStore = connectMongo(session) 
 
