@@ -1,7 +1,8 @@
 import React from 'react';
+import 'antd/dist/antd.css'
 import './App.scss';
 import {Route, Switch} from "react-router-dom";
-import Users from './components/UsersPage/Users'
+import UsersPage from './components/UsersPage/UsersPage'
 import Login from './components/Login';
 import Register from './components/Register';
 import { useDispatch } from 'react-redux';
@@ -10,6 +11,7 @@ import { getCurrentUser } from './redux/users-reducer';
 import NavBar from './components/NavBar';
 import Profile from './components/Profile';
 import Chat from './components/chat/Chat';
+import { Layout } from 'antd';
 
 const App = () => {
 
@@ -21,24 +23,18 @@ const App = () => {
   
   return (
     <div className="App">
-    <header>
-      <div className="container">
+      <Layout style={{minHeight: "100vh", height: "100vh"}}>
         <NavBar />
-      </div>
-      </header>
-    <div className="content">
-      <div className="container">
-        <Switch>
-          <Route path="/login" component={Login}/>
-          <Route path="/register" component={Register}/>
-          <Route path="/user/:id" component={Profile}/>
-          <Route path={["/chat/:id", "/chat"]} component={Chat}/>
-          <Route exact path={["/users", "/"]} component={Users}/>
-          <Route path={["/"]} component={() => (<h5>404</h5>)}/>
-        </Switch>
-      </div>
+          <Switch>
+            <Route path="/login" component={Login}/>
+            <Route path="/register" component={Register}/>
+            <Route path="/user/:id" component={Profile}/>
+            <Route path={["/chat/:id", "/chat"]} component={Chat}/>
+            <Route exact path={["/users", "/"]} component={UsersPage}/>
+            <Route path={["/"]} component={() => (<h5>404</h5>)}/>
+          </Switch>
+      </Layout>
     </div>
-  </div>
   )
 }
 

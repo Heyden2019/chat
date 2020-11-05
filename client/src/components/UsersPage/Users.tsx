@@ -1,64 +1,41 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { Col, Row } from 'antd'
+import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import isAuth from './../../hoc/isAuth'
-import { RootState } from './../../redux/store'
-import { getUsers, resetUsersState } from './../../redux/users-reducer'
-import Avatar from './../Avatar'
-import Preloader from './../Preloader'
-import UserSearch from './UserSearch'
-import UsersPagination from './UsersPagination'
+import { RootState } from '../../redux/store'
+import { User } from '../../types'
+import Avatar from '../Avatar'
 
-export type SearchValuesType = {
-    fullname: string
-    newFirst: boolean
+type PropsType = {
+    users: User[]
 }
 
-const Users = () => {
- 
-    const dispatch = useDispatch()
-    const [searchValues, setSearchValues] = useState<SearchValuesType>({
-        fullname: "",
-        newFirst: true
-    })
-    const [currentPage, setcurrentPage] = useState(1)
-    const users = useSelector((state: RootState) => state.users.users)
+const Users: FC<PropsType> = ({users}) => {
+    
     const me = useSelector((state: RootState) => state.users.currentUser)
-    const loading = useSelector((state: RootState) => state.users.loading)
-
-    useEffect(() => {
-        setcurrentPage(1)
-        dispatch(getUsers({...searchValues}))
-    }, [searchValues]) // eslint-disable-line react-hooks/exhaustive-deps 
 
     return (  
-    <>
-        <UserSearch searchValues={searchValues} setSearchValues={setSearchValues} />
-        {(loading === "with_pagination" && <Preloader /> )
-            || (!users.length && <p>No results</p>) 
-                || (<>
-                    <UsersPagination searchValues={searchValues} currentPage={currentPage} setcurrentPage={setcurrentPage} />
-                    {loading === "without_pagination" 
-                        ? <Preloader /> 
-                        : <div className="user_list">
-                            {users.map(user => (
-                                <div className="user" key={user._id}>
-                                    <NavLink to={`/user/`+user._id} className="user__link" >
-                                        <Avatar image_id={user.image_id}/>
-                                        {user.fullname}
-                                    </NavLink>
-                                    {user._id !== me?._id 
-                                        ? <NavLink to={`/chat/`+user._id}>Chat</NavLink> 
-                                        : <span style={{color: "red"}}>&nbsp; It's you</span>
-                                    }
-                                </div>
-                            ))}
-                        </div>
-                    }
-                </>)
-        }
-    </>
+    <div className="users-page__users">
+  
+        {users.map(user => (
+            <Row className="users-page__users__user" key={user._id} align={"middle"}>
+                <Col>
+                <NavLink to={`/user/`+user._id} className="profile__link">
+                    <Avatar image_id={user.image_id}/>
+                    {user.fullname}
+                </NavLink>
+                </Col>
+                <Col>
+                {user._id !== me?._id 
+                    ? <NavLink to={`/chat/`+user._id}>&nbsp;  Chat</NavLink> 
+                    : <span style={{color: "red"}}>&nbsp; It's you</span>
+                }
+                </Col>
+            </Row>
+        ))}
+                 
+                 </div>
     )
 }
 
-export default isAuth(Users)
+export default Users

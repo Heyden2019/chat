@@ -1,5 +1,7 @@
 import React, { FC } from 'react'
-import { SearchValuesType } from './Users'
+import { SearchValuesType } from './UsersPage'
+import { Col, Input, Row } from 'antd';
+import { Checkbox } from 'antd';
 
 type PropsType = {
     searchValues: SearchValuesType
@@ -18,20 +20,17 @@ const UserSearch: FC<PropsType> = ({searchValues, setSearchValues}) => {
     }
 
     return (
-        <div className="user-searcher">
-            <input type="text"
-                className="search-input search-icon"
-                onChange={onChangeFullnameSearchInput}
-                value={searchValues.fullname} />
-            <div className="user-searcher__new-first">
-                <input type="checkbox"
-                    name="newFirst"
-                    id="newFirst"
-                    onChange={onChangeNewFirstCheckbox}
-                    checked={searchValues.newFirst} />
-                <label htmlFor="newFirst">&nbsp; New first</label>
-            </div>
-        </div>
+        <Row align="middle" className="users-page__search" gutter={[16, 8]}>
+            <Col>
+                <Input placeholder="Search"
+                    onChange={onChangeFullnameSearchInput}
+                    value={searchValues.fullname}
+                />
+            </Col>
+            <Col>
+                <Checkbox onChange={onChangeNewFirstCheckbox} checked={searchValues.newFirst} style={{}}>New first</Checkbox>
+            </Col>
+        </Row>
     )
 }
 

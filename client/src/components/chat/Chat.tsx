@@ -10,6 +10,10 @@ import { useParams } from 'react-router-dom'
 import { getUserById, setTargetUser } from '../../redux/users-reducer'
 import openSocket from 'socket.io-client'
 import { BASE_URL } from '../../settings'
+import { Layout, Menu } from 'antd'
+import { blue } from '@ant-design/colors'
+
+const { Header, Content, Footer, Sider } = Layout;
 
 const Chat = React.memo(() => {
 
@@ -31,18 +35,40 @@ const Chat = React.memo(() => {
     if(!me) return null
 
     return (
-        <div className="chat_page">
-            <div className="dialogs_list">
-                Dialogs:
-                <DialogsList socket={socket} />
-            </div>
-            {partner && !isMe ? <div className="chat_body">
-                <MessagesHeader user={partner}/>
-                <Messages socket={socket} partnerId={partner._id}/>
-                <ChatInput />
-            </div>
-            : null}
-        </div>
+        // <div className="chat_page">
+        //     <div className="dialogs_list">
+        //         Dialogs:
+        //         <DialogsList socket={socket} />
+        //     </div>
+        //     {partner && !isMe ? <div className="chat_body">
+        //         <MessagesHeader user={partner}/>
+        //         <Messages socket={socket} partnerId={partner._id}/>
+        //         <ChatInput />
+        //     </div>
+        //     : null}
+        // </div>
+         <Layout>
+         <Sider theme="light"
+           style={{
+             overflow: 'auto',
+             height: '100%',
+             position: 'fixed',
+             left: 0,
+             width: '250px'
+           }}
+         >
+             <DialogsList socket={socket}/>
+
+         </Sider>
+         {partner && !isMe ? <Layout className="site-layout" style={{ marginLeft: 200 }}>
+           <MessagesHeader user={partner} />
+
+           <Messages socket={socket} partnerId={partner._id} />
+
+          <ChatInput />
+         </Layout>
+         : null}
+       </Layout>
     )
 })
 

@@ -5,6 +5,10 @@ import { RootState } from './../../redux/store'
 import Dialog from './Dialog'
 import { User } from './../../types'
 import Preloader from '../Preloader'
+import { Menu, Row, Spin, Typography } from 'antd'
+import { blue } from '@ant-design/colors'
+
+const {Text} = Typography
 
 type PropsType = {
     socket: any
@@ -27,10 +31,11 @@ const DialogsList: FC<PropsType> = React.memo(({socket}) => {
         }
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-    if(isLoading) return <Preloader />
-    if(!dialogs.length) return <p>No dialogs </p>
+    if(isLoading) return <Row justify="center" style={{marginTop: 10}}><Spin /></Row>
+    if(!dialogs.length) return <Row justify="center" style={{marginTop: 10}}><Text>No dialogs</Text></Row>
 
-    return (<>
+    return (
+        <Menu mode="vertical" selectedKeys={[]}>
             {[...dialogs].map(dialog => (
                 <Dialog user={dialog.users.find(user => user._id !== myId) as User} 
                         text={dialog.lastMessage?.text || 'NO TEXT'}
@@ -40,7 +45,7 @@ const DialogsList: FC<PropsType> = React.memo(({socket}) => {
                         key={dialog._id}
                 />
             ))}
-            </>
+        </Menu>
     )
 })
 

@@ -1,44 +1,53 @@
 import React, { FC, useMemo } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { User } from './../../types'
 import formatDate from './../../utils/messageTimeFormater'
-import classNames from 'classnames'
 import Avatar from './../Avatar'
+import { Col, Menu, Row, Typography } from 'antd'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
+import classNames from 'classnames'
+
+const { Text } = Typography
 
 type PropsType = {
-    user: User, 
-    text: string, 
+    user: User,
+    text: string,
     date: Date,
     isMyMsg: boolean
 }
 
-const Dialog: FC<PropsType> = React.memo(({user, text, date, isMyMsg}) => {
+const Dialog: FC<PropsType> = React.memo(({ user, text, date, isMyMsg, ...props}) => {
     const history = useHistory()
-    const params: any = useParams()
     const lastMessageTime = useMemo(() => formatDate(date), [date])
-
-    const changeCurrentDialog = (id: string) => {
-        history.push('/chat/' + id)
-    }
+    const partnerId = useSelector((state: RootState) => state.users.targetUser?._id)
 
     return (
-        <div className={classNames("dialog_item", {current_dialog: params.id === user._id})}
-            onClick={() => changeCurrentDialog(user._id)}>
-            <Avatar image_id={user.image_id} />
-            <div className="message">
-                <div className="msg_header">
-                    <span className="user">
-                        {user.fullname}
-                    </span>
-                    <span className="datetime">
-                        {lastMessageTime}
-                    </span>
-                </div>
-                <div className="msg_body">
-                {isMyMsg ? <b>Me: </b> : null}{text}
-                </div>
-            </div>
-        </div>
+        <Menu.Item key={partnerId}
+        {...props}
+            onClick={() => history.push('/chat/' + user._id)}
+            className={classNames("chat-page__dialogs__item", {"chat-page__dialogs__item_active": partnerId === user._id})}
+            >
+            <Row align="middle" wrap={false} >
+                <Col >
+                    <Avatar image_id={user.image_id} />
+                </Col>
+                <Col flex={1} style={{width: "100%"}}>
+                    <Row justify="space-between" wrap={false}>
+                        <Col>{user.fullname}</Col>
+                        <Col>{lastMessageTime}</Col>
+                    </Row>
+                    <Row wrap={false}>
+                    {isMyMsg && <Text style={{color: "green"}}>
+                        Me: &nbsp;
+                        </Text>}
+                        <Text>
+                        {text}
+                        </Text>
+                    </Row>
+                </Col>
+            </Row>
+        </Menu.Item>
     )
 })
 

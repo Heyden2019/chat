@@ -2,8 +2,9 @@ import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { getUsers } from '../../redux/users-reducer'
-import Pagination from '../Pagination'
-import { SearchValuesType } from './Users'
+import { SearchValuesType } from './UsersPage'
+import { Pagination } from 'antd';
+import { USERS_PAGINATION_PORTION } from '../../settings'
 
 type PropsType = {
     searchValues: SearchValuesType
@@ -26,7 +27,14 @@ const UsersPagination: FC<PropsType> = ({searchValues, currentPage, setcurrentPa
     if(!totalUsers) return null
 
     return (
-        <Pagination currentPage={currentPage} totalItems={totalUsers} onChangePage={onChangePage} />
+        <Pagination
+            total={totalUsers}
+            showQuickJumper
+            current={currentPage}
+            onChange={onChangePage}
+            defaultPageSize={USERS_PAGINATION_PORTION}
+            className="users-page__pagination"
+        />
     )
 }
 

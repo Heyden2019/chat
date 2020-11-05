@@ -1,9 +1,13 @@
+import { Button, Layout, Row, Spin } from 'antd'
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Preloader from '../Preloader'
 import { getMessages, addMessage, getMoreMessages, resetMessagesState } from './../../redux/messages-reducer'
 import { RootState } from './../../redux/store'
 import Message from './Message'
+
+const { Header, Content, Footer, Sider } = Layout;
+
 
 type PropsType = {
     socket: any
@@ -21,7 +25,9 @@ const Messages: FC<PropsType> = React.memo(({socket, partnerId}) => {
 
     useEffect(() => {
         socket.on('SERVER:NEW_MESSAGE_IN_DIALOG_WITH' + partnerId, (msg: any) => {
-             dispatch(addMessage(msg)) 
+             dispatch(addMessage(msg))
+             //@ts-ignore
+        msgBlock?.current.scrollTo(0, msgBlock.current.scrollHeight)
             })
         return () => {
             socket.off('SERVER:NEW_MESSAGE_IN_DIALOG_WITH' + partnerId)
@@ -44,15 +50,13 @@ const Messages: FC<PropsType> = React.memo(({socket, partnerId}) => {
         setMessagesScrollHeight(msgBlock.current?.scrollHeight || 0)
         dispatch(getMoreMessages(partnerId, messages[0].createdAt))
     }
-    
+
     return (
-        <div className="messages" ref={msgBlock}>
-            <div className="get-more-btn-and-spinner">
-                {   (isLoading && <Preloader />) 
-                    ||
-                    (hasMore && <button onClick={getMore}>get more</button>)
-                }
-            </div>
+        <Content style={{overflow: "scroll"}}>
+            <div className="chat-page__messages" ref={msgBlock}>
+            {(isLoading && <Row justify="center" style={{margin: 10}}><Spin /></Row>)
+                ||
+                (hasMore && <Row justify="center" style={{margin: 10}}><Button type="dashed" onClick={getMore}>get more</Button></Row>)}
             {messages.map(msg => (
                 <Message createdAt={msg.createdAt}
                         text={msg.text} 
@@ -60,7 +64,8 @@ const Messages: FC<PropsType> = React.memo(({socket, partnerId}) => {
                         key={msg._id} 
                         />
             ))}
-        </div>
+            </div>
+      </Content>
     )
 })
 

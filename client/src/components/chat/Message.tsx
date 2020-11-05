@@ -2,6 +2,9 @@ import React, { FC, useMemo } from 'react'
 import formatDate from './../../utils/messageTimeFormater'
 import { User } from './../../types'
 import Avatar from './../Avatar'
+import { Col, Row, Space, Typography } from 'antd'
+
+const { Text } = Typography;
 
 type PropsType = {
     user: User, 
@@ -14,22 +17,20 @@ const Message: FC<PropsType> = React.memo(({user, createdAt, text}) => {
     const date = useMemo(() => formatDate(createdAt), [createdAt])
 
     return (
-        <div className="message-and-avatar">
+        <Row wrap={false}>
+            <Col>
             <Avatar image_id={user.image_id} />
-            <div className="message">
-                <div className="msg_header">
-                    <span className="user">
-                        {user.fullname}
-                    </span>
-                    <span className="datetime">
-                        {date}
-                    </span>
-                </div>
-                <div className="msg_body">
-                    {text}
-                </div>
-            </div>
-        </div>
+            </Col>
+            <Col flex={1}>
+                <Row>
+                    <Space direction="horizontal">
+                        <Text strong>{user.fullname}</Text>
+                        <Text type="secondary">{date}</Text>
+                    </Space>
+                </Row>
+                <Row><Text className="chat-page__messages__item__text">{text}</Text></Row>
+            </Col>
+        </Row>
     )
 })
 
