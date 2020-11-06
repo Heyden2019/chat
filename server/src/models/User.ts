@@ -9,29 +9,15 @@ export interface IUser {
 }
 
 const userSchema = new mongoose.Schema<IUser>({
-    // firstName: {type: String, required: true},
-    // lastName: {type: String, required: true},
     fullname: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true, select: false},
-    image_id: {
-        type: mongoose.Types.ObjectId,
-        default: null,
-        ref: "Image"
+    photo_url: {
+        type: String,
+        default: null
     }
 }, {
     timestamps: true
 })
-
-// userSchema.virtual("fullname").get(function (this) {
-//     return this.firstName + ' ' + this.lastName
-// })
-
-// userSchema.pre("save", function (next) {
-//     if (this.isModified("password") || this.isNew()) {
-//         this.password = bcrtypt.hashSync(this.password, 12);
-//       }
-//     next();
-// })
 
 export default mongoose.model("User", userSchema)

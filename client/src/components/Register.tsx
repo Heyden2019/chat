@@ -1,10 +1,11 @@
+import { Input, Button, Form } from 'antd'
 import { useFormik } from 'formik'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import { ErrorType } from '../types'
 import { register } from './../redux/users-reducer'
-import CustomFormikField from './CustomFormikField'
+import ContentWrapper from './ContentWrapper'
 
 const Register = () => {
 
@@ -30,46 +31,64 @@ const Register = () => {
         }
     })
 
+    const layout = {
+        labelCol: { span: 8 },
+        wrapperCol: { span: 16 },
+    };
+    const tailLayout = {
+        wrapperCol: { offset: 8, span: 16 },
+    };
+
     return (
-        <div className="container form">
-            <form onSubmit={formik.handleSubmit}>
+        <ContentWrapper className="container-form">
+            <Form
+                {...layout}
+                name="basic"
+                onFinish={formik.handleSubmit}
+            >
+                <Form.Item
+                    label="First name"
+                    name="firstName"
+                    validateStatus={formik.errors.firstName && "error"}
+                    help={formik.errors.firstName}
+                >
+                    <Input {...formik.getFieldProps('firstName')} />
+                </Form.Item>
 
-            <CustomFormikField 
-                formik={formik}
-                name="firstName"
-                placeholder='First name'
-                type='text'
+                <Form.Item
+                    label="Last name"
+                    name="lastName"
+                    validateStatus={formik.errors.lastName && "error"}
+                    help={formik.errors.lastName}
+                >
+                    <Input {...formik.getFieldProps('lastName')} />
+                </Form.Item>
 
-            />
+                <Form.Item
+                    label="Email"
+                    name="email"
+                    validateStatus={formik.errors.email && "error"}
+                    help={formik.errors.email}
+                >
+                    <Input {...formik.getFieldProps('email')} />
+                </Form.Item>
 
-            <CustomFormikField 
-                formik={formik}
-                name="lastName"
-                placeholder='Last name'
-                type='text'
+                <Form.Item
+                    label="Password"
+                    name="password"
+                    validateStatus={formik.errors.password && "error"}
+                    help={formik.errors.password}
+                >
+                    <Input.Password {...formik.getFieldProps('password')} />
+                </Form.Item>
 
-            />
-
-            <CustomFormikField 
-                formik={formik}
-                name="email"
-                placeholder='Email'
-                type='email'
-
-            />
-
-            <CustomFormikField 
-                formik={formik}
-                name="password"
-                placeholder='Password'
-                type='password'
-
-            />
-            <button type="submit" disabled={formik.isSubmitting} className="btn">
-                Register
-            </button>
-            </form>
-        </div>
+                <Form.Item {...tailLayout}>
+                    <Button type="primary" htmlType="submit">
+                        Register
+                    </Button>
+                </Form.Item>
+            </Form>
+        </ContentWrapper>
     )
 }
 

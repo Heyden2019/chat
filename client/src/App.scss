@@ -22,95 +22,13 @@ a {
 
 *:focus {outline:none !important}
 
-// .App {
-//   height: 100vh;
-//   background-color: $gray;
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// #root {
-//   height: 100%;
-// }
-
-// header {
-//   width: 100%;
-//   display: flex;
-//   height: 50px;
-//   align-items: center;
-//   text-align: end;
-//   background-color: $purple_10;
-//   a {
-//     margin-left: 10px;
-//     color: red;
-//     &:hover {
-//       color: $lime_4;
-//     }
-//   }
-// }
-
-// .container {
-//   max-width: 768px;
-//   margin: 0 auto;
-//   width: 100%;
-//   padding: 3px;
-// }
-
-.form {
-  margin: 0 auto;
-  padding: 10px;
-  max-width: 250px;
-  input {
-    width: 100%;
-    margin-bottom: 32px;
-    padding: 10px;  
-    border: 2px solid $gray_6;
-    background-color: $gray_4;
-    border-radius: 8px;
-    &:focus{
-      border-color: $blue_3;
-    }
-    &:hover {
-      box-shadow: 0 0 10px $blue_3;
-    }
-  }
-
-  .btn {
-    padding: 10px;
-    border: 2px solid $gray_6;
-    border-radius: 8px;
-    background-color: $gray;
-    cursor: pointer;
-    transition-duration: .3s;
-    &:hover {
-      transition-duration: .3s;
-      border-color: $blue_4;
-      color: $blue_4;
-    }
-    &[disabled] {
-      color: red;
-    }
-  }
+.container-form {
+  max-width: 400px;
+  margin: auto;
 }
 
-.error {
-  color: red;
-  border-color: red !important;
-}
-
-.field {
-  position: relative;
-}
-
-p.error {
-  position: absolute;
-  top: 65px;
-}
-
-.profile-header {
-  margin-top: 20px;
-  display: flex;
-  .photo {
+.profile-page {
+  .ant-image {
     width: 240px;
     height: 320px;
     overflow: hidden;
@@ -125,174 +43,6 @@ p.error {
         height: 100%;
     }
   }
-}
-
-// .chat_page {
-//   padding-top: 20px;
-//   display: flex;
-//   align-items: flex-start;
-//   height: 100%;
-
-//   .users_list {
-//     margin-right: 20px;
-//   }
-
-//   .chat_body {
-//     min-width: 500px;
-//     display: flex;
-//     flex-direction: column;
-//     flex: 1 0;
-
-
-//     .messages {
-//       overflow: overlay;
-//       flex: 1 1 auto;
-//       height: 1px;
-//       .get-more-btn-and-spinner {
-//         display: flex;
-//         justify-content: center;
-//       }
-//     }
-
-//     .chat_input {
-//       padding: 5px 10px;
-//     }
-
-//     form {
-//       display: flex;
-//     }
-
-//     input {
-//       width: 100%;
-//       padding-right: 27px;
-//     }
-
-//     button {
-//       right: 0;
-//       background: none;
-//       border: none;
-//       padding: 0 5px;
-//       color: red;
-//       top: 0;
-//       bottom: 0;
-//       cursor: pointer;
-
-//       &:hover {
-//         color: $lime_4;
-//         background-color: $gray_6;
-//       }
-//     }
-//   }
-// }
-
-// .message-and-avatar, .dialog_item {
-//   display: flex;
-//   margin: 2px 0;
-//   border-radius: 5px;
-
-//   .message {
-//     flex: 1;
-
-//     .msg_body {
-//       overflow-wrap: anywhere;
-//     }
-
-//     .user {
-//       font-weight: bolder;
-//       color: #0058b0;
-//     }
-
-//     .datetime {
-//       margin-left: 10px;
-//       color: $gray_6;
-//       white-space: nowrap;
-//     }
-//   }
-// }
-
-// .avatar {
-//   width: 30px;
-//   min-width: 30px;
-//   height: 30px;
-//   overflow: hidden;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin: 6.6px 5px;
-//   border-radius: 50%;
-
-//   img {
-//     object-fit: cover;
-//       width: 100%;
-//       height: 100%;
-      
-//   }
-// }
-
-// .dialog_item .msg_body, 
-// .dialog_item .msg_header .user {
-//   width: 100%;
-//   white-space: nowrap;
-//   overflow: hidden;  
-//   padding-right: 5px;
-//   text-overflow: ellipsis;
-// }
-
-// .dialog_item .msg_header {
-//   display: flex;
-//   justify-content: space-between;
-// }
-
-// .dialogs_list {
-//   margin-right: 20px;
-//   min-width: 250px;
-//   padding-right: 3px;
-//   overflow: overlay;
-//   height: 100%;
-//   flex: 0 0;
-
-//   .message {
-//     overflow: auto;
-//   }
-// }
-
-// .dialog_item {
-//   cursor: pointer;
-// }
-
-// .current_dialog {
-//   background-color: $bckgcolor;
-// }
-
-// .partner_info {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-
-//   & > a {
-//     display: flex;
-//      padding: 5px;
-//      background-color: $bckgcolor;
-//      border-radius: 8px;
-//      align-items: center;
-//   }
-// }
-
-
-.profile-header {
-  .success_upload {
-    color: green;
-  }
-  .error_upload {
-    color: red;
-  }
-}
-
-.navbar_avatar {
-  display: flex;
-  align-items: center;
-  margin-right: auto;
-  margin-left: 0;
 }
 
 ::-webkit-scrollbar {
@@ -319,13 +69,10 @@ p.error {
   }
 }
 
-.profile__link {
-  display: flex;
-  align-items: center;
-}
-
 .chat-page {
   &__messages {
+    overflow: scroll;
+    flex: 1;
     &__header {
       background-color: #e6fffb;
       display: flex;
@@ -339,6 +86,10 @@ p.error {
     line-height: 20px !important;
     padding-left: 0 !important;
     height: auto !important;
+    &__text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     &_active {
       background-color: #bae7ff !important;
     }
@@ -346,4 +97,9 @@ p.error {
       background-color: #91d5ff !important;
     }
   }
+}
+
+.text-overflow-with-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

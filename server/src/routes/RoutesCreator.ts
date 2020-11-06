@@ -9,6 +9,7 @@ import { statusCreateValidator, statusUpdateValidator } from './../util/validato
 import { ImageController } from './../controllers/images';
 import requestCleaner from './../util/requestCleaner'
 import { DialogsController } from './../controllers/dialogs';
+import multerUploader from './../util/multerUploader';
 
 const RoutesCreator = (app, io) => {
     
@@ -44,8 +45,8 @@ const RoutesCreator = (app, io) => {
     app.delete("/api/statuses/:id", isAuthenticated, StatusesCtrl.deleteStatus)
 
     // images routes
-    app.get('/api/images/:id', isAuthenticated,ImageCtrl.getPhotoById)
-    app.post('/api/images', isAuthenticated, ImageCtrl.uploadNewPhoto)
+    // app.get('/api/images/:id', isAuthenticated,ImageCtrl.getPhotoById)
+    app.post('/api/images', isAuthenticated, multerUploader.single("Image"), ImageCtrl.uploadNewPhoto)
     
     //dialogs routes
     app.get('/api/dialogs', isAuthenticated, DialogsCtrl.getAllDialogs)

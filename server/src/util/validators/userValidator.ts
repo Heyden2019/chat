@@ -36,7 +36,7 @@ export const registerValidator = [
 export const loginValidator = [
     check('email')
         .trim().notEmpty().withMessage('Required')
-        .matches(/^([a-z0-9]+\.?[a-z0-9]+[@][a-z]{1,10}\.[a-z]{2,4})$/i).withMessage('Invalid')
+        .matches(/^([a-z0-9]+\.?[a-z0-9]+[@][a-z]{1,10}\.[a-z]{2,4})$/i).withMessage('Invalid email')
         .normalizeEmail()
         .custom(email => {
             return User.findOne({email}).select("password").then(async (user: any) => {
@@ -52,6 +52,7 @@ export const loginValidator = [
         .custom(async (pwd) => {
             if(!_password) return Promise.resolve()
             const valid = await argon2.verify(_password, pwd)
+            _password = null
             if (!valid) {
                 return Promise.reject('Password incorrect')
             } else {

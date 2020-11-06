@@ -1,13 +1,9 @@
-import { Button, Layout, Row, Spin } from 'antd'
+import { Button, Row, Spin } from 'antd'
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Preloader from '../Preloader'
 import { getMessages, addMessage, getMoreMessages, resetMessagesState } from './../../redux/messages-reducer'
 import { RootState } from './../../redux/store'
 import Message from './Message'
-
-const { Header, Content, Footer, Sider } = Layout;
-
 
 type PropsType = {
     socket: any
@@ -25,9 +21,9 @@ const Messages: FC<PropsType> = React.memo(({socket, partnerId}) => {
 
     useEffect(() => {
         socket.on('SERVER:NEW_MESSAGE_IN_DIALOG_WITH' + partnerId, (msg: any) => {
-             dispatch(addMessage(msg))
-             //@ts-ignore
-        msgBlock?.current.scrollTo(0, msgBlock.current.scrollHeight)
+            dispatch(addMessage(msg))
+            //@ts-ignore
+            msgBlock?.current.scrollTo(0, msgBlock.current.scrollHeight)
             })
         return () => {
             socket.off('SERVER:NEW_MESSAGE_IN_DIALOG_WITH' + partnerId)
@@ -52,8 +48,7 @@ const Messages: FC<PropsType> = React.memo(({socket, partnerId}) => {
     }
 
     return (
-        <Content style={{overflow: "scroll"}}>
-            <div className="chat-page__messages" ref={msgBlock}>
+            <div className="chat-page__messages" ref={msgBlock} style={{overflow: "scroll"}}>
             {(isLoading && <Row justify="center" style={{margin: 10}}><Spin /></Row>)
                 ||
                 (hasMore && <Row justify="center" style={{margin: 10}}><Button type="dashed" onClick={getMore}>get more</Button></Row>)}
@@ -65,7 +60,6 @@ const Messages: FC<PropsType> = React.memo(({socket, partnerId}) => {
                         />
             ))}
             </div>
-      </Content>
     )
 })
 

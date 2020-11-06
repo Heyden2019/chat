@@ -7,12 +7,14 @@ import isAuth from './../hoc/isAuth'
 import { User } from './../types'
 import defaultPhoto from './../static/images/em_avatar_default-user.png'
 import { NavLink } from 'react-router-dom'
-import {instance} from './../api/api'
-import classNames from 'classnames'
 import { API_URL } from '../settings'
+import { Button, Col, Image, Row, Space, Typography, Upload, message } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import ContentWrapper from './ContentWrapper'
 
+const { Text } = Typography
 
-type PropsType ={
+type PropsType = {
     me: null | User
 }
 
@@ -25,13 +27,11 @@ const Profile: FC<PropsType> = () => {
     const targetUser = useSelector((state: RootState) => state.users.targetUser)
     const isMe = me?._id === params.id
 
-    const [answer, setAnswer] = useState<any>(null)
-
     useEffect(() => {
 
         const fn = async () => {
             setIsLoading(true)
-            if(params?.id) {
+            if (params?.id) {
                 await dispatch(getUserById(params.id))
             }
             setIsLoading(false)
@@ -41,55 +41,49 @@ const Profile: FC<PropsType> = () => {
         return () => { dispatch(setTargetUser(null)) }
     }, [params]) // eslint-disable-line react-hooks/exhaustive-deps
 
-    //@ts-ignore
-    const changePhoto = ({target: {files}}) => {
-        if(!files) {
-            return;
-        }
-        const data = new FormData();
-        data.append( 'Image', files[0] )
-        instance.post('images', data).then(res => {
-            setAnswer({
-                type: 'success',
-                msg: 'Success'
-            })
+    const changePhoto = (info: any) => {
+        if (info.file.status === 'done') {
             dispatch(getCurrentUser())
             dispatch(getUserById(params.id))
-        }).catch(err => {
-            setAnswer({
-                type: 'error',
-                msg: err.response.data.message
-            })
-        })
+            message.success(`Photo uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.response.message}`);
+        }
     }
 
-    if(!targetUser && !isLoading) return <h3>404: USER NOT FOUND</h3>
+    if (!targetUser && !isLoading) return <h3>404: USER NOT FOUND</h3>
 
     return (
-        <div className="profile-header">
-            <div className="photo">
-                <img src={targetUser?.image_id ? `${API_URL}/images/${targetUser.image_id}` : defaultPhoto} alt="userPhoto" />
-            </div>
-            <div className="info">
-                <p>{isMe ? <b>You: </b> : null}  {targetUser?.fullname}</p>
-                <p>*beautifully designed other important information*</p>
-                {isMe ? <>
-                    <div className="new_photo_form">Upload photo:<br />
-                        <input type="file" name="image" onChange={changePhoto} />
-                    </div>
-                    {answer 
-                        ? <p className={classNames({
-                            'success_upload': answer.type === 'success',
-                            'error_upload': answer.type === 'error'
-                        })}>
-                            {answer.msg}
-                        </p>
-                        : null
-                    }
-                </>
-                    : <NavLink to={'/chat/' + targetUser?._id}>Start chat</NavLink>}
-            </div>
-        </div>
+        <ContentWrapper className="profile-page">
+            <Row>
+                <Col>
+                    <Image src={targetUser?.photo_url || defaultPhoto} />
+                </Col>
+                <Col>
+                <Space direction="vertical" size={16} >
+                    <Row>
+                        <Space size={2} align="baseline">
+                            <Text strong style={{fontSize: 20}}>{targetUser?.fullname}</Text> 
+                            {isMe ? <Text type="secondary">(It's you)</Text> : null}
+                        </Space>
+                    </Row>
+                    <Row>
+                        {isMe ?
+                            <Upload
+                                multiple={false}
+                                name="Image"
+                                action={API_URL + "/images"}
+                                withCredentials={true}
+                                onChange={changePhoto}
+                                showUploadList={false}>
+                                <Button icon={<UploadOutlined />}>Upload new photo</Button>
+                            </Upload>
+                            : <NavLink to={'/chat/' + targetUser?._id}><Button type="primary">Start chat</Button></NavLink>}
+                    </Row>
+                    </Space>
+                </Col>
+            </Row>
+        </ContentWrapper>
     )
 }
 

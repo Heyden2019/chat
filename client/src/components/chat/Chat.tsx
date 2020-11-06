@@ -10,10 +10,9 @@ import { useParams } from 'react-router-dom'
 import { getUserById, setTargetUser } from '../../redux/users-reducer'
 import openSocket from 'socket.io-client'
 import { BASE_URL } from '../../settings'
-import { Layout, Menu } from 'antd'
-import { blue } from '@ant-design/colors'
+import { Layout } from 'antd'
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 
 const Chat = React.memo(() => {
 

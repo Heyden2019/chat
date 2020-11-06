@@ -30,7 +30,7 @@ export interface UsersState {
 export interface User {
     fullname: string;
     email: string;
-    image_id: string; 
+    photo_url: null | string; 
     _id: string
 }
 

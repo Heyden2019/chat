@@ -3,9 +3,7 @@ import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { sendMessage } from './../../redux/messages-reducer'
-import { Button, Col, Input, Layout, Row } from 'antd';
-
-const { Footer } = Layout;
+import { Button, Col, Input, Row } from 'antd';
 
 const ChatInput: FC = () => {
 
@@ -25,22 +23,21 @@ const ChatInput: FC = () => {
     return (
             <form onSubmit={formik.handleSubmit}>
                 <Row align="middle">
-                <Col flex={1}><Input 
+                <Col flex={1}>
+                    <Input 
                     placeholder="Message"
                     allowClear
                     size="large"
                     {...formik.getFieldProps('msg')}
                     autoComplete='off'
-                    /></Col>
-                
-                <Col >
+                    />
+                </Col>
+                <Col>
                 <Button type="primary" onClick={formik.submitForm}>
                     Send
                 </Button></Col>
-
                 </Row>
-            </form>
-            
+            </form>        
     )
 }
 

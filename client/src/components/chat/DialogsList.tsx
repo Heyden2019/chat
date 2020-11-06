@@ -4,9 +4,7 @@ import { getDialogs, resetDialogsState, updateDialogs } from './../../redux/dial
 import { RootState } from './../../redux/store'
 import Dialog from './Dialog'
 import { User } from './../../types'
-import Preloader from '../Preloader'
 import { Menu, Row, Spin, Typography } from 'antd'
-import { blue } from '@ant-design/colors'
 
 const {Text} = Typography
 

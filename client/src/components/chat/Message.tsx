@@ -19,7 +19,7 @@ const Message: FC<PropsType> = React.memo(({user, createdAt, text}) => {
     return (
         <Row wrap={false}>
             <Col>
-            <Avatar image_id={user.image_id} />
+            <Avatar image={user.photo_url} />
             </Col>
             <Col flex={1}>
                 <Row>

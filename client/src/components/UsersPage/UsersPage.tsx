@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 import isAuth from '../../hoc/isAuth'
 import { RootState } from '../../redux/store'
-import { getUsers, resetUsersState } from '../../redux/users-reducer'
-import Avatar from '../Avatar'
-import Preloader from '../Preloader'
+import { getUsers } from '../../redux/users-reducer'
 import UserSearch from './UserSearch'
 import UsersPagination from './UsersPagination'
 import { Row, Spin } from 'antd';

@@ -15,7 +15,7 @@ const MessagesHeader: FC<PropsType> = ({ user }) => {
     return (
         <Header className="chat-page__messages__header">
             <NavLink to={'/users/' + user._id}>
-                <Avatar image_id={user.image_id} />
+                <Avatar image={user.photo_url} />
                 <Text>{user.fullname}</Text>
             </NavLink>
         </Header>

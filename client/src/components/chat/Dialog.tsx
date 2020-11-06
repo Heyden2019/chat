@@ -30,18 +30,22 @@ const Dialog: FC<PropsType> = React.memo(({ user, text, date, isMyMsg, ...props}
             >
             <Row align="middle" wrap={false} >
                 <Col >
-                    <Avatar image_id={user.image_id} />
+                    <Avatar image={user.photo_url} />
                 </Col>
-                <Col flex={1} style={{width: "100%"}}>
+                <Col flex={1} style={{
+                    display: "inline-flex",
+                    overflow: "hidden",
+                    flexDirection: "column"
+                }}>
                     <Row justify="space-between" wrap={false}>
-                        <Col>{user.fullname}</Col>
+                        <Col className="text-overflow-with-ellipsis">{user.fullname}</Col>
                         <Col>{lastMessageTime}</Col>
                     </Row>
                     <Row wrap={false}>
                     {isMyMsg && <Text style={{color: "green"}}>
                         Me: &nbsp;
                         </Text>}
-                        <Text>
+                        <Text className="text-overflow-with-ellipsis">
                         {text}
                         </Text>
                     </Row>
