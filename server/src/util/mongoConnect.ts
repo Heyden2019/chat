@@ -9,8 +9,7 @@ mongoose.connect(
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: false ,
-        useCreateIndex: true
+        useFindAndModify: false 
     }
 ).then(() => console.log("mongo started"))
 .catch((err) => console.error(err))
