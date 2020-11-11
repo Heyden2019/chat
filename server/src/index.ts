@@ -23,6 +23,7 @@ process.env.NODE_ENV !== "production" && app.use(cors({
 app.use(bodyParser.json())
 
 app.use(sessionMiddleware);
+
 io.use((socket, next) => {
     sessionMiddleware(socket.request, socket.request.res, next)
 })

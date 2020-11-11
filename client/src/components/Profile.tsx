@@ -8,9 +8,10 @@ import { User } from './../types'
 import defaultPhoto from './../static/images/em_avatar_default-user.png'
 import { NavLink } from 'react-router-dom'
 import { API_URL } from '../settings'
-import { Button, Col, Image, Row, Space, Typography, Upload, message } from 'antd';
+import { Button, Col, Image, Row, Space, Typography, Upload, message, Spin } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import ContentWrapper from './ContentWrapper'
+import lastSeenTimeFormatter from '../utils/lastSeenTimeFormater'
 
 const { Text } = Typography
 
@@ -25,7 +26,7 @@ const Profile: FC<PropsType> = () => {
     const dispatch = useDispatch()
     const params: any = useParams()
     const targetUser = useSelector((state: RootState) => state.users.targetUser)
-    const isMe = me?._id === params.id
+    const isMe = params.id === me?._id 
 
     useEffect(() => {
 
@@ -51,7 +52,8 @@ const Profile: FC<PropsType> = () => {
         }
     }
 
-    if (!targetUser && !isLoading) return <h3>404: USER NOT FOUND</h3>
+    if (isLoading) return <Row justify="center" style={{margin: 10}}><Spin /></Row>
+    if (!targetUser) return <h3>404: USER NOT FOUND</h3>
 
     return (
         <ContentWrapper className="profile-page">
@@ -61,12 +63,15 @@ const Profile: FC<PropsType> = () => {
                 </Col>
                 <Col>
                 <Space direction="vertical" size={16} >
-                    <Row>
-                        <Space size={2} align="baseline">
-                            <Text strong style={{fontSize: 20}}>{targetUser?.fullname}</Text> 
-                            {isMe ? <Text type="secondary">(It's you)</Text> : null}
-                        </Space>
-                    </Row>
+                        <Row>
+                            <Space size={0} direction="vertical">
+                                <Space size={2} align="baseline">
+                                    <Text strong style={{ fontSize: 20 }}>{targetUser?.fullname}</Text>
+                                    {isMe ? <Text type="secondary">(It's you)</Text> : null}
+                                </Space>
+                                <Text type="secondary" style={{ fontSize: 12 }}>last seen {lastSeenTimeFormatter(targetUser.last_seen)}</Text>
+                            </Space>
+                        </Row>
                     <Row>
                         {isMe ?
                             <Upload

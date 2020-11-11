@@ -3,6 +3,7 @@ import formatDate from './../../utils/messageTimeFormater'
 import { User } from './../../types'
 import Avatar from './../Avatar'
 import { Col, Row, Space, Typography } from 'antd'
+import isOnlineHelper from '../../utils/isOnlineHelper'
 
 const { Text } = Typography;
 
@@ -19,7 +20,7 @@ const Message: FC<PropsType> = React.memo(({user, createdAt, text}) => {
     return (
         <Row wrap={false}>
             <Col>
-            <Avatar image={user.photo_url} />
+            <Avatar image={user.photo_url} isOnline={isOnlineHelper(user.last_seen)}/>
             </Col>
             <Col flex={1}>
                 <Row>

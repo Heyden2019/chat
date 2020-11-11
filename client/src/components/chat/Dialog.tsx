@@ -7,6 +7,7 @@ import { Col, Menu, Row, Typography } from 'antd'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import classNames from 'classnames'
+import isOnlineHelper from '../../utils/isOnlineHelper'
 
 const { Text } = Typography
 
@@ -30,7 +31,7 @@ const Dialog: FC<PropsType> = React.memo(({ user, text, date, isMyMsg, ...props}
             >
             <Row align="middle" wrap={false} >
                 <Col >
-                    <Avatar image={user.photo_url} />
+                    <Avatar image={user.photo_url} isOnline={isOnlineHelper(user.last_seen)}/>
                 </Col>
                 <Col flex={1} style={{
                     display: "inline-flex",

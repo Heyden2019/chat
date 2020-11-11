@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { RootState } from '../../redux/store'
 import { User } from '../../types'
+import isOnlineHelper from '../../utils/isOnlineHelper'
 import Avatar from '../Avatar'
 
 type PropsType = {
@@ -21,7 +22,7 @@ const Users: FC<PropsType> = ({users}) => {
                     <Col>
                         <NavLink to={`/user/` + user._id}>
                             <Space align="center">
-                                <Avatar image={user.photo_url} />
+                                <Avatar image={user.photo_url} isOnline={isOnlineHelper(user.last_seen)}/>
                                 {user.fullname}
                             </Space>
                         </NavLink>

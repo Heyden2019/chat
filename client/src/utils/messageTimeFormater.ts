@@ -1,6 +1,4 @@
-import {format} from 'date-fns'
-import {isToday} from 'date-fns'
-import {isThisYear} from 'date-fns'
+import {format, isToday, isThisYear} from 'date-fns'
 
 export default (dt: Date) => {
     const date = new Date(dt)

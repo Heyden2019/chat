@@ -10,8 +10,11 @@ import { ImageController } from './../controllers/images';
 import requestCleaner from './../util/requestCleaner'
 import { DialogsController } from './../controllers/dialogs';
 import multerUploader from './../util/multerUploader';
+import lastSeenUpdMiddleware from './../util/lastSeenUpdMiddleware';
 
 const RoutesCreator = (app, io) => {
+
+    app.use(lastSeenUpdMiddleware);
     
     const UsersCtrl = new UsersController(io)
     const TaskCtrl = new TasksController()

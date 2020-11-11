@@ -31,7 +31,8 @@ export interface User {
     fullname: string;
     email: string;
     photo_url: null | string; 
-    _id: string
+    _id: string,
+    last_seen: Date
 }
 
 export type MessagesState = {
